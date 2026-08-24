@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>28IT.hub | Платформа школьных IT и Maker проектов</title>
-  <meta name="description" content="Платформа школьных проектов 28IT.hub — 3D-печать, FPV дроны, робототехника, микроконтроллеры и ПО." />
+  <title>28IT.hub | Платформа школьных проектов</title>
+  <meta name="description" content="Платформа школьных проектов 28IT.hub — пространство для обмена знаниями, творчеством и идеями." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=ollama_v1" />
+  <link rel="stylesheet" href="style.css?v=ollama_v2" />
 </head>
 <body class="ollama-body">
 
   <!-- ===================================================================
-       1. AUTHENTICATION FULL-SCREEN CANVAS (Flat White Canvas)
+       1. AUTHENTICATION FULL-SCREEN CANVAS
        =================================================================== -->
   <div id="authScreen" class="ollama-auth-canvas">
     <div class="ollama-auth-box">
       <div class="ollama-auth-brand">
-        <div class="ollama-mascot-logo">🦙</div>
+        <div class="potato-logo">🥔</div>
         <h1 class="ollama-display-xl">28IT.hub</h1>
-        <p class="ollama-body-md">Платформа школьных IT, 3D-печати и Maker проектов</p>
+        <p class="ollama-body-md">Платформа школьных проектов и идей</p>
       </div>
 
       <div class="ollama-auth-card">
@@ -32,7 +32,7 @@
         <form id="authForm" onsubmit="handleAuthSubmit(event)">
           <div class="ollama-form-group">
             <label class="ollama-label" for="usernameInput">Имя пользователя</label>
-            <input type="text" id="usernameInput" class="ollama-text-input" required minlength="3" autocomplete="username" placeholder="alex_maker" />
+            <input type="text" id="usernameInput" class="ollama-text-input" required minlength="3" autocomplete="username" placeholder="alex_student" />
           </div>
 
           <div class="ollama-form-group">
@@ -51,16 +51,16 @@
   </div>
 
   <!-- ===================================================================
-       2. MAIN APP SHELL (OLLAMA DOCUMENTATION-FIRST LAYOUT)
+       2. MAIN APP SHELL
        =================================================================== -->
   <div id="appContainer" class="ollama-app-container hidden">
 
-    <!-- GLOBAL PRIMARY NAVIGATION BAR (Height 56px, Canvas White) -->
+    <!-- GLOBAL PRIMARY NAVIGATION BAR -->
     <header class="ollama-primary-nav">
       <div class="ollama-nav-inner">
         <div class="ollama-nav-left">
           <button class="ollama-brand-btn" onclick="navigate('main')">
-            <span class="ollama-nav-logo">🦙</span>
+            <span class="potato-logo nav-potato">🥔</span>
             <span class="ollama-nav-title">28IT.hub</span>
           </button>
 
@@ -77,10 +77,12 @@
 
         <div class="ollama-search-pill-wrapper">
           <span class="ollama-search-icon">🔍</span>
-          <input type="text" id="globalSearchInput" class="ollama-search-input" placeholder="Поиск моделей, авторов, схем..." oninput="handleGlobalSearch()" />
+          <input type="text" id="globalSearchInput" class="ollama-search-input" placeholder="Поиск проектов, авторов, идей..." oninput="handleGlobalSearch()" />
         </div>
 
         <div class="ollama-nav-right">
+          <button class="ollama-btn-secondary theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Переключить тему">☀️</button>
+          
           <button class="ollama-btn-secondary" onclick="openPublishModal()">
             + Создать проект
           </button>
@@ -105,20 +107,20 @@
            =============================================================== -->
       <div id="pageView" class="ollama-page-view">
 
-        <!-- HERO SECTION (CENTER ALIGNED, INSTALL SNIPPET) -->
+        <!-- HERO SECTION -->
         <section id="heroChapter" class="ollama-hero-section">
-          <div class="ollama-hero-mascot">🦙</div>
-          <h1 class="ollama-display-xl" id="heroDisplayTitle">Простой способ собирать и запускать IT-проекты</h1>
-          <p class="ollama-body-md ollama-hero-subtitle">Школьная база знаний 3D-моделей, FPV схем, микроконтроллеров и софта</p>
+          <div class="potato-logo hero-potato">🥔</div>
+          <h1 class="ollama-display-xl" id="heroDisplayTitle">Свободная платформа школьных проектов</h1>
+          <p class="ollama-body-md ollama-hero-subtitle">Единое пространство для публикации работ, обмена идеями и общения авторов</p>
 
-          <!-- SIGNATURE INSTALL SNIPPET PILL -->
+          <!-- SIGNATURE SNIPPET PILL -->
           <div class="ollama-install-snippet" onclick="copyInstallCmd()">
-            <span class="ollama-code-md">git clone http://192.168.8.178:3000/28it/hub.git</span>
-            <span class="ollama-copy-btn" title="Копировать команду">📋</span>
+            <span class="ollama-code-md">28IT.hub — Локальная школьная сеть</span>
+            <span class="ollama-copy-btn" title="Копировать">📋</span>
           </div>
 
           <div class="ollama-hero-actions">
-            <button class="ollama-btn-primary" onclick="scrollToCatalog()">Каталог проектов</button>
+            <button class="ollama-btn-primary" onclick="scrollToCatalog()">Перейти в каталог</button>
             <button class="ollama-btn-secondary" onclick="openPublishModal()">Опубликовать проект</button>
           </div>
         </section>
@@ -133,24 +135,24 @@
           <!-- CATEGORY PILLS -->
           <div class="ollama-category-pills" id="categoriesList">
             <button class="ollama-cat-pill active" onclick="selectCategory('Все')">Все категории</button>
-            <button class="ollama-cat-pill" onclick="selectCategory('Учёба & Доклады')">Учёба & Доклады</button>
-            <button class="ollama-cat-pill" onclick="selectCategory('Творчество & Дизайн')">Творчество & Дизайн</button>
-            <button class="ollama-cat-pill" onclick="selectCategory('Игры & Развлечения')">Игры & Развлечения</button>
-            <button class="ollama-cat-pill" onclick="selectCategory('Идеи & Лайфхаки')">Идеи & Лайфхаки</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Учёба')">Учёба</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Творчество')">Творчество</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Игры & Досуг')">Игры & Досуг</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Идеи & Проекты')">Идеи & Проекты</button>
             <button class="ollama-cat-pill" onclick="selectCategory('Другое')">Другое</button>
           </div>
 
-          <!-- PROJECTS GRID (3-UP DESKTOP) -->
+          <!-- PROJECTS GRID -->
           <div id="projectsGrid" class="ollama-projects-grid">
             <div class="ollama-loading">Загрузка каталога...</div>
           </div>
         </section>
 
-        <!-- TERMINAL CARD & GIT ACTIVITY SECTION -->
+        <!-- TERMINAL CARD & ACTIVITY SECTION -->
         <section class="ollama-section">
           <div class="ollama-section-header">
-            <h2 class="ollama-heading-lg">Активность в Gitea репозиториях</h2>
-            <p class="ollama-body-md">События коммитов и вебхуков разработчиков локальной сети</p>
+            <h2 class="ollama-heading-lg">Лента событий 28IT.hub</h2>
+            <p class="ollama-body-md">Обновления и активность участников локальной сети</p>
           </div>
 
           <div class="ollama-terminal-grid">
@@ -160,31 +162,31 @@
                 <span class="ollama-dot red"></span>
                 <span class="ollama-dot yellow"></span>
                 <span class="ollama-dot green"></span>
-                <span class="ollama-terminal-title">bash — 28it-hub-cli</span>
+                <span class="ollama-terminal-title">Консоль событий — 28IT.hub</span>
               </div>
               <div class="ollama-terminal-body" id="terminalOutput">
-                <div class="ollama-code-sm mute"># Подключение к серверу 28IT.hub</div>
-                <div class="ollama-code-sm"><span class="prompt">$</span> ollama launch 28it-hub</div>
-                <div class="ollama-code-sm mute">pulling manifest... 100%</div>
-                <div class="ollama-code-sm">status: ready on http://localhost:3000</div>
+                <div class="ollama-code-sm mute"># Локальное подключение активна</div>
+                <div class="ollama-code-sm"><span class="prompt">$</span> 28it-hub status</div>
+                <div class="ollama-code-sm mute">загрузка системы... 100%</div>
+                <div class="ollama-code-sm">статус: готов к работе (http://localhost:3000)</div>
               </div>
             </div>
 
             <!-- GIT ACTIVITY STREAM -->
             <div class="ollama-git-stream" id="gitActivityList">
-              <div class="ollama-git-empty">Ожидание событий с Gitea...</div>
+              <div class="ollama-git-empty">Ожидание новых событий...</div>
             </div>
           </div>
         </section>
 
-        <!-- INVERTED DARK CARD SECTION (MAX TIER / HIGHLIGHT) -->
+        <!-- INVERTED DARK CARD SECTION -->
         <section class="ollama-section">
           <div class="ollama-pricing-card-dark">
             <div class="ollama-dark-card-inner">
-              <div class="ollama-dark-badge">ШКОЛЬНЫЙ МЕЙКЕР-КЛУБ</div>
+              <div class="ollama-dark-badge">ШКОЛЬНОЕ СООБЩЕСТВО</div>
               <h3 class="ollama-heading-lg">Присоединяйтесь к лаборатории 28IT</h3>
               <p class="ollama-body-md dark-mute">
-                Доступ к 3D-принтерам, паяльным станциям, лазерным станкам и наборам микроконтроллеров.
+                Объединяйтесь с другими школьниками, создавайте уникальные работы и делитесь результатами.
               </p>
               <button class="ollama-btn-pill-on-dark" onclick="openPublishModal()">
                 Загрузить свою работу

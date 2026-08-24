@@ -1,33 +1,35 @@
 /* ===================================================================
-   OLLAMA DESIGN SYSTEM (Strict compliance with DESIGN.md - System 1)
-   Brand: Pure Black (#000000) · Canvas: White (#ffffff) · Mono Code
-   Typography: SF Pro Rounded / system-ui / ui-monospace
-   Geometry: Full Pill buttons (9999px) & 12px LG Cards
+   28IT.HUB DESIGN SYSTEM
+   Brand: Potato 🥔 · Canvas: Light (#ffffff) / Dark (#121214)
+   Typography: SF Pro Rounded / Nunito / system-ui / ui-monospace
+   Geometry: Rounded Pill buttons & Clean Cards
    =================================================================== */
 
-:root {
-  /* Colors - Brand & Accent */
+:root, html[data-theme="light"] {
+  /* Colors - Light Theme */
   --color-primary: #000000;
   --color-on-primary: #ffffff;
   --color-ink: #000000;
   --color-ink-deep: #090909;
-  --color-charcoal: #525252;
-  --color-body: #737373;
-  --color-mute: #a3a3a3;
+  --color-charcoal: #424242;
+  --color-body: #555555;
+  --color-mute: #888888;
   --color-canvas: #ffffff;
-  --color-surface-soft: #fafafa;
+  --color-surface-soft: #f4f4f6;
   --color-surface-card: #ffffff;
-  --color-hairline: #e5e5e5;
-  --color-hairline-strong: #d4d4d4;
+  --color-hairline: #e2e2e8;
+  --color-hairline-strong: #d0d0d8;
   --color-on-dark: #ffffff;
   --color-on-dark-mute: rgba(255, 255, 255, 0.7);
-  --color-surface-dark: #171717;
-  --color-focus-ring: rgba(59, 130, 246, 0.5);
+  --color-surface-dark: #18181b;
+  --color-focus-ring: rgba(59, 130, 246, 0.4);
   --color-link: #000000;
   --color-link-mute: #737373;
   --color-terminal-red: #ff5f56;
   --color-terminal-yellow: #ffbd2e;
   --color-terminal-green: #27c93f;
+  --color-card-bg: #ffffff;
+  --color-card-border: #e2e2e8;
 
   /* Typography Fonts */
   --font-family-display: "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -49,7 +51,31 @@
   --space-lg: 16px;
   --space-xl: 24px;
   --space-xxl: 32px;
-  --space-section: 88px;
+  --space-section: 64px;
+}
+
+html[data-theme="dark"] {
+  /* Colors - Dark Theme */
+  --color-primary: #ffffff;
+  --color-on-primary: #000000;
+  --color-ink: #f4f4f6;
+  --color-ink-deep: #e4e4e7;
+  --color-charcoal: #a1a1aa;
+  --color-body: #a1a1aa;
+  --color-mute: #71717a;
+  --color-canvas: #121214;
+  --color-surface-soft: #1c1c1f;
+  --color-surface-card: #18181b;
+  --color-hairline: #2e2e34;
+  --color-hairline-strong: #3f3f46;
+  --color-on-dark: #ffffff;
+  --color-on-dark-mute: rgba(255, 255, 255, 0.7);
+  --color-surface-dark: #27272a;
+  --color-focus-ring: rgba(96, 165, 250, 0.5);
+  --color-link: #ffffff;
+  --color-link-mute: #a1a1aa;
+  --color-card-bg: #18181b;
+  --color-card-border: #2e2e34;
 }
 
 /* Base Reset */
@@ -65,9 +91,10 @@ html, body {
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: var(--font-family-body);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -90,30 +117,49 @@ button {
   width: 100% !important;
 }
 
+/* Smiling Potato Logo */
+.potato-logo {
+  font-size: 28px;
+  line-height: 1;
+  display: inline-block;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+.potato-logo:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+.nav-potato {
+  font-size: 22px;
+}
+.hero-potato {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
 /* ===================================================================
-   TYPOGRAPHY SPECIFICATION (Ollama System)
+   TYPOGRAPHY SPECIFICATION
    =================================================================== */
 .ollama-display-xl {
   font-family: var(--font-family-display);
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 1.11;
-  letter-spacing: 0;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--color-ink);
 }
 
 .ollama-display-lg {
   font-family: var(--font-family-display);
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
   letter-spacing: 0;
   color: var(--color-ink);
 }
 
 .ollama-heading-lg {
   font-family: var(--font-family-display);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.33;
   letter-spacing: 0;
@@ -122,7 +168,7 @@ button {
 
 .ollama-heading-md {
   font-family: var(--font-family-body);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0;
@@ -131,16 +177,16 @@ button {
 
 .ollama-heading-sm {
   font-family: var(--font-family-body);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.56;
+  line-height: 1.5;
   letter-spacing: 0;
   color: var(--color-ink);
 }
 
 .ollama-body-md {
   font-family: var(--font-family-body);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.5;
   color: var(--color-body);
@@ -152,7 +198,7 @@ button {
 
 .ollama-body-strong {
   font-family: var(--font-family-body);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.5;
   color: var(--color-ink);
@@ -160,7 +206,7 @@ button {
 
 .ollama-body-sm {
   font-family: var(--font-family-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.43;
   color: var(--color-body);
@@ -168,7 +214,7 @@ button {
 
 .ollama-body-sm-strong {
   font-family: var(--font-family-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.43;
   color: var(--color-ink);
@@ -184,20 +230,20 @@ button {
 
 .ollama-code-md {
   font-family: var(--font-family-mono);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
 }
 
 .ollama-code-sm {
   font-family: var(--font-family-mono);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.43;
 }
 
 /* ===================================================================
-   BUTTON COMPONENTS (Pill Geometry rounded.full)
+   BUTTON COMPONENTS (Neat, clean, rounded)
    =================================================================== */
 .ollama-btn-primary {
   background-color: var(--color-primary);
@@ -207,38 +253,52 @@ button {
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-full);
-  padding: 8px 20px;
+  padding: 8px 18px;
   height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
-  transition: background-color 0.15s ease;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.ollama-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 .ollama-btn-primary:active {
-  background-color: var(--color-ink-deep);
+  transform: translateY(0);
 }
 
 .ollama-btn-secondary {
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface-soft);
   color: var(--color-ink);
-  border: 1px solid var(--color-hairline-strong);
+  border: 1px solid var(--color-hairline);
   font-family: var(--font-family-body);
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-full);
-  padding: 8px 20px;
+  padding: 8px 18px;
   height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ollama-btn-secondary:hover {
+  background-color: var(--color-hairline);
+  color: var(--color-ink);
+  transform: translateY(-1px);
 }
 
 .ollama-btn-pill-on-dark {
-  background-color: var(--color-canvas);
-  color: var(--color-ink);
+  background-color: #ffffff;
+  color: #000000;
   font-family: var(--font-family-body);
   font-size: 14px;
   font-weight: 500;
@@ -249,11 +309,18 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ollama-btn-pill-on-dark:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 .ollama-btn-icon {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-full);
   width: 36px;
   height: 36px;
@@ -261,6 +328,11 @@ button {
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.ollama-btn-icon:hover {
+  background-color: var(--color-hairline);
 }
 
 /* ===================================================================
@@ -384,7 +456,7 @@ button {
 }
 
 /* ===================================================================
-   PRIMARY NAVIGATION (Height 56px, Canvas White)
+   PRIMARY NAVIGATION (Height 56px, Sticky)
    =================================================================== */
 .ollama-primary-nav {
   height: 56px;
@@ -396,11 +468,12 @@ button {
   display: flex;
   align-items: center;
   padding: 0 var(--space-xl);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .ollama-nav-inner {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1080px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -444,6 +517,7 @@ button {
   color: var(--color-body);
   padding: 4px 0;
   position: relative;
+  transition: color 0.15s ease;
 }
 
 .ollama-nav-link.active {
@@ -462,7 +536,7 @@ button {
 
 .ollama-search-pill-wrapper {
   position: relative;
-  width: 320px;
+  width: 300px;
 }
 
 .ollama-search-icon {
@@ -479,12 +553,13 @@ button {
   width: 100%;
   height: 36px;
   background-color: var(--color-surface-soft);
-  border: 1px solid transparent;
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-full);
   padding: 8px 16px 8px 36px;
   font-size: 14px;
   color: var(--color-ink);
   outline: none;
+  transition: all 0.2s ease;
 }
 
 .ollama-search-input:focus {
@@ -496,7 +571,7 @@ button {
 .ollama-nav-right {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 .ollama-user-pill {
@@ -507,6 +582,7 @@ button {
   padding: 4px var(--space-sm);
   border-radius: var(--radius-full);
   background-color: var(--color-surface-soft);
+  border: 1px solid var(--color-hairline);
 }
 
 .ollama-user-avatar {
@@ -523,19 +599,19 @@ button {
 }
 
 .ollama-username {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--color-ink);
 }
 
 /* ===================================================================
-   MAIN CONTAINER & SINGLE READING COLUMN LAYOUT (~720px)
+   MAIN CONTAINER & BALANCED LAYOUT (1080px max-width)
    =================================================================== */
 .ollama-main-wrapper {
   width: 100%;
-  max-width: 720px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: var(--space-section) var(--space-xl);
+  padding: 40px var(--space-xl) 80px var(--space-xl);
 }
 
 .ollama-section {
@@ -555,24 +631,21 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-section);
-}
-
-.ollama-hero-mascot {
-  font-size: 72px;
-  line-height: 1;
+  gap: var(--space-md);
+  margin: 0 auto var(--space-section) auto;
+  max-width: 720px;
+  padding: 24px 16px;
 }
 
 .ollama-hero-subtitle {
-  max-width: 540px;
+  max-width: 520px;
 }
 
 .ollama-install-snippet {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
-  padding: 12px 20px;
-  height: 48px;
+  padding: 10px 20px;
+  height: 42px;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
@@ -580,6 +653,7 @@ button {
   cursor: pointer;
   border: 1px solid var(--color-hairline);
   user-select: all;
+  transition: border-color 0.2s ease;
 }
 
 .ollama-install-snippet:hover {
@@ -594,9 +668,10 @@ button {
 .ollama-hero-actions {
   display: flex;
   gap: var(--space-md);
+  margin-top: var(--space-xs);
 }
 
-/* CATEGORIES STIP */
+/* CATEGORIES STRIP */
 .ollama-category-pills {
   display: flex;
   flex-wrap: wrap;
@@ -607,22 +682,24 @@ button {
 .ollama-cat-pill {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
   padding: 6px 16px;
   border-radius: var(--radius-full);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .ollama-cat-pill.active {
   background-color: var(--color-primary);
   color: var(--color-on-primary);
+  border-color: transparent;
 }
 
-/* PROJECTS GRID & CARDS (12px LG rounded, Hairline border) */
+/* PROJECTS GRID & CARDS */
 .ollama-projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--space-xl);
 }
 

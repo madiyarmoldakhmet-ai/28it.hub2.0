@@ -12,9 +12,11 @@ let searchQuery = '';
 let pendingAttachmentUrl = null;
 
 // =====================================================================
-// INIT
+// INIT & THEME MANAGEMENT
 // =====================================================================
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+
   const savedToken = localStorage.getItem('messenger_token');
   const savedUser = localStorage.getItem('messenger_user');
 
@@ -30,6 +32,26 @@ document.addEventListener('DOMContentLoaded', () => {
     showAuthScreen();
   }
 });
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  setTheme(savedTheme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  const btn = document.getElementById('themeToggleBtn');
+  if (btn) {
+    btn.innerText = theme === 'dark' ? '🌙' : '☀️';
+  }
+}
 
 // =====================================================================
 // NAVIGATION & VIEWS
@@ -70,11 +92,11 @@ function navigate(viewName) {
       loadProjects();
     } else if (viewName === 'projects') {
       if (heroChapter) heroChapter.classList.add('hidden');
-      if (sectionTitle) sectionTitle.innerText = 'Все инженерные проекты';
+      if (sectionTitle) sectionTitle.innerText = 'Все проекты';
       loadProjects();
     } else if (viewName === 'my-projects') {
       if (heroChapter) heroChapter.classList.add('hidden');
-      if (sectionTitle) sectionTitle.innerText = 'Мои проекты и модели';
+      if (sectionTitle) sectionTitle.innerText = 'Мои проекты';
       loadProjects({ userId: currentUser.id });
     } else if (viewName === 'profile') {
       if (heroChapter) heroChapter.classList.add('hidden');
@@ -115,9 +137,9 @@ function handleGlobalSearch() {
 }
 
 function copyInstallCmd() {
-  const cmd = "git clone http://192.168.8.178:3000/28it/hub.git";
+  const cmd = "http://localhost:3000";
   navigator.clipboard.writeText(cmd).then(() => {
-    alert("Команда скопирована в буфер обмена!");
+    alert("Ссылка на сайт скопирована!");
   }).catch(() => {});
 }
 
