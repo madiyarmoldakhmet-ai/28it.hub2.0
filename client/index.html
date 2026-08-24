@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>28IT.hub | Платформа школьных IT и Maker проектов</title>
+  <meta name="description" content="Платформа школьных проектов 28IT.hub — 3D-печать, FPV дроны, робототехника, микроконтроллеры и ПО." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=ollama_v1" />
+</head>
+<body class="ollama-body">
+
+  <!-- ===================================================================
+       1. AUTHENTICATION FULL-SCREEN CANVAS (Flat White Canvas)
+       =================================================================== -->
+  <div id="authScreen" class="ollama-auth-canvas">
+    <div class="ollama-auth-box">
+      <div class="ollama-auth-brand">
+        <div class="ollama-mascot-logo">🦙</div>
+        <h1 class="ollama-display-xl">28IT.hub</h1>
+        <p class="ollama-body-md">Платформа школьных IT, 3D-печати и Maker проектов</p>
+      </div>
+
+      <div class="ollama-auth-card">
+        <div class="ollama-auth-tabs">
+          <button id="loginTabBtn" class="ollama-tab-pill active" onclick="switchAuthTab('login')">Вход</button>
+          <button id="registerTabBtn" class="ollama-tab-pill" onclick="switchAuthTab('register')">Регистрация</button>
+        </div>
+
+        <form id="authForm" onsubmit="handleAuthSubmit(event)">
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="usernameInput">Имя пользователя</label>
+            <input type="text" id="usernameInput" class="ollama-text-input" required minlength="3" autocomplete="username" placeholder="alex_maker" />
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="passwordInput">Пароль</label>
+            <input type="password" id="passwordInput" class="ollama-text-input" required minlength="6" autocomplete="current-password" placeholder="••••••••" />
+          </div>
+
+          <div id="authError" class="ollama-warning-box hidden"></div>
+
+          <div class="ollama-form-actions">
+            <button type="submit" id="authSubmitBtn" class="ollama-btn-primary full-width">Войти</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       2. MAIN APP SHELL (OLLAMA DOCUMENTATION-FIRST LAYOUT)
+       =================================================================== -->
+  <div id="appContainer" class="ollama-app-container hidden">
+
+    <!-- GLOBAL PRIMARY NAVIGATION BAR (Height 56px, Canvas White) -->
+    <header class="ollama-primary-nav">
+      <div class="ollama-nav-inner">
+        <div class="ollama-nav-left">
+          <button class="ollama-brand-btn" onclick="navigate('main')">
+            <span class="ollama-nav-logo">🦙</span>
+            <span class="ollama-nav-title">28IT.hub</span>
+          </button>
+
+          <nav class="ollama-nav-links">
+            <button id="navMain" class="ollama-nav-link active" onclick="navigate('main')">Главная</button>
+            <button id="navProjects" class="ollama-nav-link" onclick="navigate('projects')">Каталог</button>
+            <button id="navMyProjects" class="ollama-nav-link" onclick="navigate('my-projects')">Мои проекты</button>
+            <button id="navChats" class="ollama-nav-link" onclick="navigate('chats')">
+              Сообщения
+              <span id="unreadBadge" class="ollama-badge-unread hidden">0</span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="ollama-search-pill-wrapper">
+          <span class="ollama-search-icon">🔍</span>
+          <input type="text" id="globalSearchInput" class="ollama-search-input" placeholder="Поиск моделей, авторов, схем..." oninput="handleGlobalSearch()" />
+        </div>
+
+        <div class="ollama-nav-right">
+          <button class="ollama-btn-secondary" onclick="openPublishModal()">
+            + Создать проект
+          </button>
+
+          <div class="ollama-user-pill" onclick="navigate('profile')" title="Мой профиль">
+            <span class="ollama-user-avatar" id="currentUserAvatar">U</span>
+            <span class="ollama-username" id="currentUsername">User</span>
+          </div>
+
+          <button class="ollama-btn-icon" onclick="logout()" title="Выйти">
+            ✕
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN READING COLUMN CONTENT -->
+    <main class="ollama-main-wrapper">
+
+      <!-- ===============================================================
+           VIEW 1: HOME / CATALOG / MY PROJECTS / PROFILE
+           =============================================================== -->
+      <div id="pageView" class="ollama-page-view">
+
+        <!-- HERO SECTION (CENTER ALIGNED, INSTALL SNIPPET) -->
+        <section id="heroChapter" class="ollama-hero-section">
+          <div class="ollama-hero-mascot">🦙</div>
+          <h1 class="ollama-display-xl" id="heroDisplayTitle">Простой способ собирать и запускать IT-проекты</h1>
+          <p class="ollama-body-md ollama-hero-subtitle">Школьная база знаний 3D-моделей, FPV схем, микроконтроллеров и софта</p>
+
+          <!-- SIGNATURE INSTALL SNIPPET PILL -->
+          <div class="ollama-install-snippet" onclick="copyInstallCmd()">
+            <span class="ollama-code-md">git clone http://192.168.8.178:3000/28it/hub.git</span>
+            <span class="ollama-copy-btn" title="Копировать команду">📋</span>
+          </div>
+
+          <div class="ollama-hero-actions">
+            <button class="ollama-btn-primary" onclick="scrollToCatalog()">Каталог проектов</button>
+            <button class="ollama-btn-secondary" onclick="openPublishModal()">Опубликовать проект</button>
+          </div>
+        </section>
+
+        <!-- CATALOG & CATEGORIES SECTION -->
+        <section id="catalogSection" class="ollama-section">
+          <div class="ollama-section-header">
+            <h2 class="ollama-display-lg" id="sectionTitle">Каталог проектов</h2>
+            <span id="projectsCount" class="ollama-caption-sm">0 проектов</span>
+          </div>
+
+          <!-- CATEGORY PILLS -->
+          <div class="ollama-category-pills" id="categoriesList">
+            <button class="ollama-cat-pill active" onclick="selectCategory('Все')">Все категории</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Учёба & Доклады')">Учёба & Доклады</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Творчество & Дизайн')">Творчество & Дизайн</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Игры & Развлечения')">Игры & Развлечения</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Идеи & Лайфхаки')">Идеи & Лайфхаки</button>
+            <button class="ollama-cat-pill" onclick="selectCategory('Другое')">Другое</button>
+          </div>
+
+          <!-- PROJECTS GRID (3-UP DESKTOP) -->
+          <div id="projectsGrid" class="ollama-projects-grid">
+            <div class="ollama-loading">Загрузка каталога...</div>
+          </div>
+        </section>
+
+        <!-- TERMINAL CARD & GIT ACTIVITY SECTION -->
+        <section class="ollama-section">
+          <div class="ollama-section-header">
+            <h2 class="ollama-heading-lg">Активность в Gitea репозиториях</h2>
+            <p class="ollama-body-md">События коммитов и вебхуков разработчиков локальной сети</p>
+          </div>
+
+          <div class="ollama-terminal-grid">
+            <!-- TERMINAL CARD PRODUCT PREVIEW -->
+            <div class="ollama-terminal-card">
+              <div class="ollama-terminal-header">
+                <span class="ollama-dot red"></span>
+                <span class="ollama-dot yellow"></span>
+                <span class="ollama-dot green"></span>
+                <span class="ollama-terminal-title">bash — 28it-hub-cli</span>
+              </div>
+              <div class="ollama-terminal-body" id="terminalOutput">
+                <div class="ollama-code-sm mute"># Подключение к серверу 28IT.hub</div>
+                <div class="ollama-code-sm"><span class="prompt">$</span> ollama launch 28it-hub</div>
+                <div class="ollama-code-sm mute">pulling manifest... 100%</div>
+                <div class="ollama-code-sm">status: ready on http://localhost:3000</div>
+              </div>
+            </div>
+
+            <!-- GIT ACTIVITY STREAM -->
+            <div class="ollama-git-stream" id="gitActivityList">
+              <div class="ollama-git-empty">Ожидание событий с Gitea...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- INVERTED DARK CARD SECTION (MAX TIER / HIGHLIGHT) -->
+        <section class="ollama-section">
+          <div class="ollama-pricing-card-dark">
+            <div class="ollama-dark-card-inner">
+              <div class="ollama-dark-badge">ШКОЛЬНЫЙ МЕЙКЕР-КЛУБ</div>
+              <h3 class="ollama-heading-lg">Присоединяйтесь к лаборатории 28IT</h3>
+              <p class="ollama-body-md dark-mute">
+                Доступ к 3D-принтерам, паяльным станциям, лазерным станкам и наборам микроконтроллеров.
+              </p>
+              <button class="ollama-btn-pill-on-dark" onclick="openPublishModal()">
+                Загрузить свою работу
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="ollama-section">
+          <h2 class="ollama-display-lg">Часто задаваемые вопросы</h2>
+          <div class="ollama-faq-list">
+            <div class="ollama-faq-row">
+              <div class="ollama-heading-sm">Как выложить свой проект?</div>
+              <div class="ollama-body-md">Нажмите кнопку «+ Создать проект», заполните описание, прикрепите файлы или ссылку на репозиторий в Gitea.</div>
+            </div>
+            <div class="ollama-faq-row">
+              <div class="ollama-heading-sm">Как заказать 3D-печать детали?</div>
+              <div class="ollama-body-md">Найдите интересующий проект в каталоге и нажмите «Написать автору», чтобы обсудить изготовление.</div>
+            </div>
+            <div class="ollama-faq-row">
+              <div class="ollama-heading-sm">Работает ли сайт без интернета?</div>
+              <div class="ollama-body-md">Да, платформа развернута в локальной сети школы и доступна автономно.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER SECTION -->
+        <footer class="ollama-footer">
+          <div class="ollama-footer-links">
+            <a href="#" onclick="navigate('main'); return false;">Главная</a>
+            <a href="#" onclick="navigate('projects'); return false;">Проекты</a>
+            <a href="#" onclick="navigate('my-projects'); return false;">Мои публикации</a>
+            <a href="#" onclick="navigate('chats'); return false;">Сообщения</a>
+            <span>Gitea</span>
+            <span>28IT Lab</span>
+          </div>
+          <div class="ollama-footer-copy">© 2026 28IT.hub · Документированная система мейкеров</div>
+        </footer>
+
+      </div><!-- /pageView -->
+
+      <!-- ===============================================================
+           VIEW 2: CHATS & DIRECT MESSAGING
+           =============================================================== -->
+      <div id="chatsView" class="ollama-chats-screen hidden">
+        <div class="ollama-chats-shell">
+          
+          <!-- Chats Sidebar -->
+          <aside class="ollama-chats-sidebar">
+            <div class="ollama-chats-header">
+              <h2 class="ollama-heading-md">Диалоги</h2>
+            </div>
+            <div id="chatsList" class="ollama-dialogs-list"></div>
+          </aside>
+
+          <!-- Active Chat Window -->
+          <section class="ollama-chat-viewport">
+            <div id="chatHeader" class="ollama-chat-header-bar">
+              <div class="ollama-chat-peer-info">
+                <div id="activeChatAvatar" class="ollama-avatar-pill">👤</div>
+                <div>
+                  <div id="activeChatTitle" class="ollama-heading-md">Выберите диалог</div>
+                  <div id="chatSubInfo" class="ollama-caption-sm">Диалоги по проектам</div>
+                </div>
+              </div>
+              <div id="typingIndicator" class="ollama-typing-tag hidden">печатает...</div>
+            </div>
+
+            <div id="messagesContainer" class="ollama-messages-scroll-area">
+              <div class="ollama-empty-messages">
+                <div class="ollama-empty-icon">💬</div>
+                <div class="ollama-heading-md">Диалог не выбран</div>
+                <p class="ollama-body-sm">Выберите контакт слева или нажмите «Написать автору» в карточке</p>
+              </div>
+            </div>
+
+            <form id="messageForm" class="ollama-message-compose-bar hidden" onsubmit="sendMessage(event)">
+              <div id="chatAttachPreview" class="ollama-attach-preview hidden">
+                <img id="chatAttachImg" src="" alt="preview" />
+                <button type="button" class="ollama-attach-remove" onclick="removeChatAttach()">✕</button>
+              </div>
+
+              <div class="ollama-compose-inputs">
+                <button type="button" class="ollama-btn-icon" onclick="document.getElementById('chatFileInput').click()" title="Прикрепить фото">
+                  📷
+                </button>
+                <input type="file" id="chatFileInput" accept="image/*" style="display:none" onchange="handleChatFileSelect(event)" />
+                
+                <textarea id="messageInput" class="ollama-text-input ollama-compose-textarea" placeholder="Введите сообщение..." rows="1" oninput="handleTyping()" onkeydown="handleKeyDown(event)"></textarea>
+                
+                <button type="submit" class="ollama-btn-primary">
+                  Отправить
+                </button>
+              </div>
+            </form>
+          </section>
+
+        </div>
+      </div><!-- /chatsView -->
+
+    </main>
+  </div>
+
+  <!-- ===================================================================
+       3. MODALS
+       =================================================================== -->
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="projectDetailModal" class="ollama-modal-overlay hidden" onclick="handleOverlayClick(event, 'projectDetailModal')">
+    <div class="ollama-modal-container">
+      <button class="ollama-modal-close" onclick="closeProjectDetailModal()">✕</button>
+      <div id="projectDetailBody" class="ollama-modal-inner">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PUBLISH MODAL -->
+  <div id="publishModal" class="ollama-modal-overlay hidden" onclick="handleOverlayClick(event, 'publishModal')">
+    <div class="ollama-modal-container">
+      <div class="ollama-modal-header">
+        <h3 class="ollama-heading-lg">Опубликовать новый проект</h3>
+        <button class="ollama-modal-close" onclick="closePublishModal()">✕</button>
+      </div>
+
+      <div class="ollama-modal-inner">
+        <form id="publishForm" onsubmit="handlePublishSubmit(event)">
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postTitle">Название проекта *</label>
+            <input type="text" id="postTitle" class="ollama-text-input" placeholder="Например: FPV Квадрокоптер Mark4" required />
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postCategory">Категория</label>
+            <select id="postCategory" class="ollama-text-input ollama-select">
+              <option value="Учёба & Доклады">Учёба & Доклады</option>
+              <option value="Творчество & Дизайн">Творчество & Дизайн</option>
+              <option value="Игры & Развлечения">Игры & Развлечения</option>
+              <option value="Идеи & Лайфхаки">Идеи & Лайфхаки</option>
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postDesc">Описание проекта *</label>
+            <textarea id="postDesc" class="ollama-text-input ollama-textarea" rows="4" placeholder="Характеристики, детали, особенности..." required></textarea>
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postRepo">Ссылка на Git-репозиторий (Gitea / GitHub)</label>
+            <input type="text" id="postRepo" class="ollama-text-input" placeholder="http://192.168.8.178:3000/user/fpv-project" />
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postImageInput">Обложка / Изображение</label>
+            <input type="file" id="postImageInput" accept="image/*" class="ollama-text-input" />
+          </div>
+
+          <div id="publishError" class="ollama-warning-box hidden"></div>
+
+          <div class="ollama-modal-actions">
+            <button type="button" class="ollama-btn-secondary" onclick="closePublishModal()">Отмена</button>
+            <button type="submit" id="publishBtn" class="ollama-btn-primary">Опубликовать</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js?v=ollama_v1"></script>
+</body>
+</html>
