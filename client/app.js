@@ -137,9 +137,9 @@ function handleGlobalSearch() {
 }
 
 function copyInstallCmd() {
-  const cmd = "http://localhost:3000";
+  const cmd = "http://192.168.0.132:3000";
   navigator.clipboard.writeText(cmd).then(() => {
-    alert("Ссылка на сайт скопирована!");
+    alert("Локальная ссылка http://192.168.0.132:3000 скопирована!");
   }).catch(() => {});
 }
 
