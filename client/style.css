@@ -1,11 +1,49 @@
 /* ===================================================================
-   28IT.HUB DESIGN SYSTEM
-   Brand: Potato 🥔 · Canvas: Light (#ffffff) / Dark (#121214)
+   28IT.HUB DESIGN SYSTEM (Nexus Style)
+   Brand: Potato 🥔 · Canvas: Dark (#0d0d0e) / Light (#ffffff)
    Typography: SF Pro Rounded / Nunito / system-ui / ui-monospace
-   Geometry: Rounded Pill buttons & Clean Cards
    =================================================================== */
 
-:root, html[data-theme="light"] {
+:root, html[data-theme="dark"] {
+  /* Colors - Dark Theme (Default as shown in reference) */
+  --color-primary: #ffffff;
+  --color-on-primary: #000000;
+  --color-ink: #ffffff;
+  --color-ink-deep: #e4e4e7;
+  --color-charcoal: #a1a1aa;
+  --color-body: #9999a1;
+  --color-mute: #66666e;
+  --color-canvas: #0b0b0c;
+  --color-surface-soft: #161618;
+  --color-surface-card: #141416;
+  --color-hairline: #222226;
+  --color-hairline-strong: #33333a;
+  --color-on-dark: #ffffff;
+  --color-on-dark-mute: rgba(255, 255, 255, 0.7);
+  --color-surface-dark: #1d1d22;
+  --color-focus-ring: rgba(255, 255, 255, 0.3);
+  --color-link: #ffffff;
+  --color-link-mute: #a1a1aa;
+  --color-terminal-red: #ff5f56;
+  --color-terminal-yellow: #ffbd2e;
+  --color-terminal-green: #27c93f;
+  --color-card-bg: #141416;
+  --color-card-border: #222226;
+
+  /* Typography Fonts */
+  --font-family-display: "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Radius System */
+  --radius-none: 0px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+}
+
+html[data-theme="light"] {
   /* Colors - Light Theme */
   --color-primary: #000000;
   --color-on-primary: #ffffff;
@@ -22,61 +60,13 @@
   --color-on-dark: #ffffff;
   --color-on-dark-mute: rgba(255, 255, 255, 0.7);
   --color-surface-dark: #18181b;
-  --color-focus-ring: rgba(59, 130, 246, 0.4);
+  --color-focus-ring: rgba(0, 0, 0, 0.3);
   --color-link: #000000;
   --color-link-mute: #737373;
-  --color-terminal-red: #ff5f56;
-  --color-terminal-yellow: #ffbd2e;
-  --color-terminal-green: #27c93f;
   --color-card-bg: #ffffff;
   --color-card-border: #e2e2e8;
-
-  /* Typography Fonts */
-  --font-family-display: "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-
-  /* Radius System */
-  --radius-none: 0px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
-  /* Spacing Scale */
-  --space-xxs: 2px;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 24px;
-  --space-xxl: 32px;
-  --space-section: 64px;
 }
 
-html[data-theme="dark"] {
-  /* Colors - Dark Theme */
-  --color-primary: #ffffff;
-  --color-on-primary: #000000;
-  --color-ink: #f4f4f6;
-  --color-ink-deep: #e4e4e7;
-  --color-charcoal: #a1a1aa;
-  --color-body: #a1a1aa;
-  --color-mute: #71717a;
-  --color-canvas: #121214;
-  --color-surface-soft: #1c1c1f;
-  --color-surface-card: #18181b;
-  --color-hairline: #2e2e34;
-  --color-hairline-strong: #3f3f46;
-  --color-on-dark: #ffffff;
-  --color-on-dark-mute: rgba(255, 255, 255, 0.7);
-  --color-surface-dark: #27272a;
-  --color-focus-ring: rgba(96, 165, 250, 0.5);
-  --color-link: #ffffff;
-  --color-link-mute: #a1a1aa;
-  --color-card-bg: #18181b;
-  --color-card-border: #2e2e34;
-}
 /* Base Reset */
 *, *:before, *:after {
   box-sizing: border-box;
@@ -129,19 +119,19 @@ button {
   transform: scale(1.12) rotate(4deg);
 }
 .nav-potato {
-  font-size: 20px;
+  font-size: 18px;
 }
 .hero-potato {
-  font-size: 36px;
-  margin-bottom: 8px;
+  font-size: 32px;
+  margin-bottom: 6px;
 }
 
 /* ===================================================================
-   TYPOGRAPHY SPECIFICATION
+   TYPOGRAPHY SPECIFICATION (Zoomed out scale)
    =================================================================== */
 .ollama-display-xl {
   font-family: var(--font-family-display);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -150,37 +140,33 @@ button {
 
 .ollama-display-lg {
   font-family: var(--font-family-display);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.3;
-  letter-spacing: 0;
   color: var(--color-ink);
 }
 
 .ollama-heading-lg {
   font-family: var(--font-family-display);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.35;
-  letter-spacing: 0;
   color: var(--color-ink);
 }
 
 .ollama-heading-md {
   font-family: var(--font-family-body);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0;
   color: var(--color-ink);
 }
 
 .ollama-heading-sm {
   font-family: var(--font-family-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0;
   color: var(--color-ink);
 }
 
@@ -243,24 +229,24 @@ button {
 }
 
 /* ===================================================================
-   BUTTON COMPONENTS
+   BUTTON COMPONENTS (Reference Style)
    =================================================================== */
 .ollama-btn-primary {
   background-color: var(--color-primary);
   color: var(--color-on-primary);
   font-family: var(--font-family-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-full);
-  padding: 7px 16px;
-  height: 32px;
+  padding: 6px 14px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
+  gap: 4px;
   border: 1px solid transparent;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
@@ -269,25 +255,21 @@ button {
   transform: translateY(-1px);
 }
 
-.ollama-btn-primary:active {
-  transform: translateY(0);
-}
-
 .ollama-btn-secondary {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
   border: 1px solid var(--color-hairline);
   font-family: var(--font-family-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-full);
-  padding: 7px 16px;
-  height: 32px;
+  padding: 6px 14px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
@@ -297,26 +279,48 @@ button {
   transform: translateY(-1px);
 }
 
+.ollama-btn-link {
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ollama-btn-link:hover {
+  text-decoration: underline;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-ink);
+}
+
 .ollama-btn-pill-on-dark {
   background-color: #ffffff;
   color: #000000;
   font-family: var(--font-family-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1;
   border-radius: var(--radius-full);
-  padding: 7px 18px;
-  height: 32px;
+  padding: 6px 16px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
 .ollama-btn-pill-on-dark:hover {
   opacity: 0.9;
-  transform: translateY(-1px);
 }
 
 .ollama-btn-icon {
@@ -324,13 +328,13 @@ button {
   color: var(--color-ink);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-full);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  transition: all 0.2s ease;
+  font-size: 12px;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 }
 
@@ -338,9 +342,7 @@ button {
   background-color: var(--color-hairline);
 }
 
-/* ===================================================================
-   AUTHENTICATION CANVAS
-   =================================================================== */
+/* AUTHENTICATION CANVAS */
 .ollama-auth-canvas {
   width: 100vw;
   height: 100vh;
@@ -353,39 +355,39 @@ button {
 
 .ollama-auth-box {
   width: 100%;
-  max-width: 360px;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-lg);
+  gap: 16px;
 }
 
 .ollama-auth-card {
   width: 100%;
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface-card);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 16px;
   text-align: left;
 }
 
 .ollama-auth-tabs {
   display: flex;
-  gap: var(--space-xs);
+  gap: 4px;
   background-color: var(--color-surface-soft);
-  padding: 4px;
+  padding: 3px;
   border-radius: var(--radius-full);
 }
 
 .ollama-tab-pill {
   flex: 1;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-body);
   text-align: center;
@@ -394,18 +396,17 @@ button {
 .ollama-tab-pill.active {
   background-color: var(--color-canvas);
   color: var(--color-ink);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .ollama-form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
+  gap: 4px;
+  margin-bottom: 12px;
 }
 
 .ollama-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-ink);
 }
@@ -415,40 +416,40 @@ button {
   color: var(--color-ink);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-full);
-  padding: 6px 14px;
-  height: 36px;
+  padding: 5px 12px;
+  height: 32px;
   font-family: var(--font-family-body);
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   width: 100%;
 }
 
 .ollama-text-input:focus {
   border-color: var(--color-ink);
-  box-shadow: 0 0 0 3px var(--color-focus-ring);
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
 }
 
 .ollama-textarea {
   border-radius: var(--radius-lg);
   height: auto;
-  padding: 10px 14px;
+  padding: 8px 12px;
 }
 
 .ollama-warning-box {
-  background-color: #fff1f0;
-  border: 1px solid #ffa39e;
-  color: #cf1322;
-  padding: 8px 14px;
+  background-color: rgba(207, 19, 34, 0.1);
+  border: 1px solid rgba(207, 19, 34, 0.3);
+  color: #ff4d4f;
+  padding: 6px 12px;
   border-radius: var(--radius-lg);
-  font-size: 13px;
-  margin-bottom: var(--space-md);
+  font-size: 12px;
+  margin-bottom: 12px;
 }
 
 /* ===================================================================
-   PRIMARY NAVIGATION (Height 48px, Compact & Responsive)
+   PRIMARY NAVIGATION (Exact reference matching)
    =================================================================== */
 .ollama-primary-nav {
-  height: 48px;
+  height: 46px;
   background-color: var(--color-canvas);
   border-bottom: 1px solid var(--color-hairline);
   position: sticky;
@@ -457,12 +458,12 @@ button {
   display: flex;
   align-items: center;
   padding: 0 16px;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition: background-color 0.25s ease;
 }
 
 .ollama-nav-inner {
   width: 100%;
-  max-width: 980px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -485,12 +486,12 @@ button {
 }
 
 .ollama-nav-logo {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .ollama-nav-title {
   font-family: var(--font-family-display);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-ink);
 }
@@ -502,10 +503,10 @@ button {
 }
 
 .ollama-nav-link {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-body);
-  padding: 4px 0;
+  padding: 3px 0;
   position: relative;
   transition: color 0.15s ease;
   white-space: nowrap;
@@ -522,14 +523,12 @@ button {
   font-weight: 600;
   padding: 1px 5px;
   border-radius: var(--radius-full);
-  margin-left: 3px;
+  margin-left: 2px;
 }
 
 .ollama-search-pill-wrapper {
   position: relative;
-  width: auto;
-  max-width: 200px;
-  flex: 1;
+  width: 180px;
 }
 
 .ollama-search-icon {
@@ -537,19 +536,19 @@ button {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-mute);
   pointer-events: none;
 }
 
 .ollama-search-input {
   width: 100%;
-  height: 32px;
+  height: 28px;
   background-color: var(--color-surface-soft);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-full);
-  padding: 4px 12px 4px 30px;
-  font-size: 13px;
+  padding: 3px 10px 3px 28px;
+  font-size: 12px;
   color: var(--color-ink);
   outline: none;
   transition: all 0.2s ease;
@@ -558,7 +557,6 @@ button {
 .ollama-search-input:focus {
   background-color: var(--color-canvas);
   border-color: var(--color-hairline-strong);
-  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .ollama-nav-right {
@@ -571,52 +569,58 @@ button {
 .ollama-user-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: var(--radius-full);
   background-color: var(--color-surface-soft);
   border: 1px solid var(--color-hairline);
 }
 
 .ollama-user-avatar {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   color: var(--color-on-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
 }
 
 .ollama-username {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--color-ink);
 }
 
 /* ===================================================================
-   MAIN CONTAINER & DISTANCE LAYOUT (960px max-width)
+   MAIN CONTAINER & ZOOMED OUT DISTANCE LAYOUT (900px max-width)
    =================================================================== */
 .ollama-main-wrapper {
   width: 100%;
-  max-width: 960px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 32px 16px 60px 16px;
+  padding: 24px 16px 40px 16px;
 }
 
 .ollama-section {
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .ollama-section-header {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+}
+
+.ollama-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 /* HERO SECTION */
@@ -625,25 +629,25 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 12px;
-  margin: 0 auto 40px auto;
-  max-width: 600px;
-  padding: 16px 12px;
+  gap: 10px;
+  margin: 0 auto 32px auto;
+  max-width: 540px;
+  padding: 12px 8px;
 }
 
 .ollama-hero-subtitle {
-  max-width: 440px;
+  max-width: 420px;
 }
 
 .ollama-install-snippet {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
-  padding: 6px 16px;
-  height: 36px;
+  padding: 4px 14px;
+  height: 32px;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   border: 1px solid var(--color-hairline);
   user-select: all;
@@ -655,33 +659,71 @@ button {
 }
 
 .ollama-copy-btn {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-mute);
 }
 
 .ollama-hero-actions {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.ollama-status-line {
+  font-size: 11px;
+  color: var(--color-mute);
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 4px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #27c93f;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* AUTOMATE YOUR WORK 2-COLUMN SPLIT SECTION */
+.ollama-split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.ollama-split-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ollama-split-right {
+  width: 100%;
 }
 
 /* CATEGORIES STRIP */
 .ollama-category-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
+  gap: 5px;
+  margin-bottom: 16px;
 }
 
 .ollama-cat-pill {
   background-color: var(--color-surface-soft);
   color: var(--color-ink);
   border: 1px solid var(--color-hairline);
-  padding: 5px 14px;
+  padding: 4px 12px;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .ollama-cat-pill.active {
@@ -693,8 +735,8 @@ button {
 /* PROJECTS GRID & CARDS */
 .ollama-projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
 }
 
 .ollama-card {

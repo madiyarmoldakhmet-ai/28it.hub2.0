@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>28IT.hub | Платформа школьных проектов</title>
-  <meta name="description" content="Платформа школьных проектов 28IT.hub — пространство для обмена знаниями, творчеством и идеями." />
+  <meta name="description" content="Платформа школьных проектов 28IT.hub — локальная сеть." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=ollama_v2" />
+  <link rel="stylesheet" href="style.css?v=nexus_v1" />
 </head>
 <body class="ollama-body">
 
@@ -18,7 +18,7 @@
   <div id="authScreen" class="ollama-auth-canvas">
     <div class="ollama-auth-box">
       <div class="ollama-auth-brand">
-        <div class="potato-logo">🥔</div>
+        <div class="potato-logo hero-potato">🥔</div>
         <h1 class="ollama-display-xl">28IT.hub</h1>
         <p class="ollama-body-md">Платформа школьных проектов и идей</p>
       </div>
@@ -55,7 +55,7 @@
        =================================================================== -->
   <div id="appContainer" class="ollama-app-container hidden">
 
-    <!-- GLOBAL PRIMARY NAVIGATION BAR -->
+    <!-- GLOBAL PRIMARY NAVIGATION BAR (Exact reference layout) -->
     <header class="ollama-primary-nav">
       <div class="ollama-nav-inner">
         <div class="ollama-nav-left">
@@ -77,23 +77,23 @@
 
         <div class="ollama-search-pill-wrapper">
           <span class="ollama-search-icon">🔍</span>
-          <input type="text" id="globalSearchInput" class="ollama-search-input" placeholder="Поиск проектов, авторов, идей..." oninput="handleGlobalSearch()" />
+          <input type="text" id="globalSearchInput" class="ollama-search-input" placeholder="Поиск проектов..." oninput="handleGlobalSearch()" />
         </div>
 
         <div class="ollama-nav-right">
-          <button class="ollama-btn-secondary theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Переключить тему">☀️</button>
-          
-          <button class="ollama-btn-secondary" onclick="openPublishModal()">
-            + Создать проект
-          </button>
+          <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Переключить тему">☀️</button>
 
           <div class="ollama-user-pill" onclick="navigate('profile')" title="Мой профиль">
             <span class="ollama-user-avatar" id="currentUserAvatar">U</span>
             <span class="ollama-username" id="currentUsername">User</span>
           </div>
 
+          <button class="ollama-btn-secondary" onclick="openPublishModal()">
+            + Создать проект
+          </button>
+
           <button class="ollama-btn-icon" onclick="logout()" title="Выйти">
-            ✕
+            ↳
           </button>
         </div>
       </div>
@@ -111,7 +111,7 @@
         <section id="heroChapter" class="ollama-hero-section">
           <div class="potato-logo hero-potato">🥔</div>
           <h1 class="ollama-display-xl" id="heroDisplayTitle">Свободная платформа школьных проектов</h1>
-          <p class="ollama-body-md ollama-hero-subtitle">Единое пространство для публикации работ, обмена идеями и общения авторов</p>
+          <p class="ollama-body-md ollama-hero-subtitle">Локальное школьное пространство для публикаций, идей и общения</p>
 
           <!-- SIGNATURE SNIPPET PILL -->
           <div class="ollama-install-snippet" onclick="copyInstallCmd()">
@@ -120,16 +120,55 @@
           </div>
 
           <div class="ollama-hero-actions">
-            <button class="ollama-btn-primary" onclick="scrollToCatalog()">Перейти в каталог</button>
-            <button class="ollama-btn-secondary" onclick="openPublishModal()">Опубликовать проект</button>
+            <button class="ollama-btn-primary" onclick="scrollToCatalog()">Каталог проектов →</button>
+            <button class="ollama-btn-secondary" onclick="navigate('chats')">Сообщения →</button>
+            <button class="ollama-btn-link" onclick="openPublishModal()">Создать проект →</button>
+          </div>
+
+          <div class="ollama-status-line">
+            <span class="status-dot"></span> 28IT.hub готов к работе в локальной сети
+          </div>
+        </section>
+
+        <!-- AUTOMATE YOUR WORK / SPLIT SECTION (2-COLUMN GRID LIKE REFERENCE SCREENSHOT) -->
+        <section class="ollama-section ollama-split-section">
+          <div class="ollama-split-left">
+            <h2 class="ollama-display-lg">Автоматизация & Публикации</h2>
+            <p class="ollama-body-md">
+              Публикуйте свои работы, прикрепляйте файлы и исходный код, общайтесь с авторами в локальной сети школы.
+            </p>
+            <button class="ollama-btn-secondary" onclick="navigate('chats')">
+              Открыть диалоги →
+            </button>
+          </div>
+
+          <div class="ollama-split-right">
+            <div class="ollama-terminal-card">
+              <div class="ollama-terminal-header">
+                <span class="ollama-dot red"></span>
+                <span class="ollama-dot yellow"></span>
+                <span class="ollama-dot green"></span>
+                <span class="ollama-terminal-title">bash — 28it-hub status</span>
+              </div>
+              <div class="ollama-terminal-body" id="terminalOutput">
+                <div class="ollama-code-sm mute">$ 28it-hub status</div>
+                <div class="ollama-code-sm">status: ready on http://localhost:3000</div>
+                <div class="ollama-code-sm mute"># Активные участники локальной сети</div>
+                <div class="ollama-code-sm"><span class="prompt">$</span> 28it-hub list</div>
+                <div class="ollama-code-sm">projects: active</div>
+              </div>
+            </div>
           </div>
         </section>
 
         <!-- CATALOG & CATEGORIES SECTION -->
         <section id="catalogSection" class="ollama-section">
           <div class="ollama-section-header">
-            <h2 class="ollama-display-lg" id="sectionTitle">Каталог проектов</h2>
-            <span id="projectsCount" class="ollama-caption-sm">0 проектов</span>
+            <div class="ollama-header-row">
+              <h2 class="ollama-display-lg" id="sectionTitle">Каталог проектов</h2>
+              <span id="projectsCount" class="ollama-caption-sm">0 проектов</span>
+            </div>
+            <p class="ollama-body-sm">Все опубликованные работы участников школы</p>
           </div>
 
           <!-- CATEGORY PILLS -->
