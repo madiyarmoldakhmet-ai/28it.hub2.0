@@ -5,6 +5,7 @@ const {
   getPosts,
   getPostById,
   createPost,
+  togglePin,
   toggleLike,
   getComments,
   addComment,
@@ -18,6 +19,9 @@ router.get('/posts/:id', authenticate, getPostById);
 
 // POST /api/posts             — create a new post
 router.post('/posts', authenticate, createPost);
+
+// POST /api/posts/:id/pin     — toggle pin on a post
+router.post('/posts/:id/pin', authenticate, togglePin);
 
 // POST /api/posts/:id/like    — toggle like on a post
 router.post('/posts/:id/like', authenticate, toggleLike);

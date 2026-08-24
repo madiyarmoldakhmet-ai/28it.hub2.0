@@ -152,11 +152,23 @@ async function initDatabase() {
     }
     const hasCategory = postsInfo.some((col) => col.name === 'category');
     if (!hasCategory) {
-      await run("ALTER TABLE posts ADD COLUMN category TEXT NOT NULL DEFAULT 'Учёба & Доклады'");
+      await run("ALTER TABLE posts ADD COLUMN category TEXT NOT NULL DEFAULT 'Учёба'");
     }
     const hasViews = postsInfo.some((col) => col.name === 'views');
     if (!hasViews) {
       await run("ALTER TABLE posts ADD COLUMN views INTEGER NOT NULL DEFAULT 0");
+    }
+    const hasCodeSnippet = postsInfo.some((col) => col.name === 'code_snippet');
+    if (!hasCodeSnippet) {
+      await run('ALTER TABLE posts ADD COLUMN code_snippet TEXT');
+    }
+    const hasFileUrl = postsInfo.some((col) => col.name === 'file_url');
+    if (!hasFileUrl) {
+      await run('ALTER TABLE posts ADD COLUMN file_url TEXT');
+    }
+    const hasIsPinned = postsInfo.some((col) => col.name === 'is_pinned');
+    if (!hasIsPinned) {
+      await run('ALTER TABLE posts ADD COLUMN is_pinned INTEGER NOT NULL DEFAULT 0');
     }
   } catch (err) {
     console.error('Migration error (posts columns):', err);

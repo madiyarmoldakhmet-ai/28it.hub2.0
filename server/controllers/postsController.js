@@ -1,6 +1,6 @@
 const { run, get, all } = require('../db/database');
 
-// GET /api/posts — all posts with category filtering, user_id filtering, commit count from events, views, likes
+// GET /api/posts — all posts with category filtering, user_id filtering, views, likes, pinned first
 async function getPosts(req, res) {
   try {
     const { category, userId } = req.query;
@@ -14,6 +14,9 @@ async function getPosts(req, res) {
         p.category,
         p.repo_url,
         p.image_url,
+        p.code_snippet,
+        p.file_url,
+        p.is_pinned,
         p.views,
         p.created_at,
         u.username AS author,
@@ -42,36 +45,12 @@ async function getPosts(req, res) {
       sql += ' WHERE ' + conditions.join(' AND ');
     }
 
-    sql += ' ORDER BY p.created_at DESC';
+    sql += ' ORDER BY p.is_pinned DESC, p.created_at DESC';
 
     const posts = await all(sql, params);
 
-    // Calculate commits count for posts that have repo_url
     for (const post of posts) {
-      if (post.repo_url) {
-        // extract repo name if possible or search matching repo in events
-        const events = await all(
-          `SELECT payload_json FROM events WHERE event_type = 'push'`
-        );
-        let commitsCount = 0;
-        for (const ev of events) {
-          try {
-            const payload = JSON.parse(ev.payload_json || '{}');
-            const repoFull = payload.repository ? payload.repository.full_name : '';
-            const repoHtmlUrl = payload.repository ? payload.repository.html_url : '';
-            if (
-              (repoFull && post.repo_url.includes(repoFull)) ||
-              (repoHtmlUrl && post.repo_url.includes(repoHtmlUrl)) ||
-              (payload.repository && payload.repository.name && post.repo_url.includes(payload.repository.name))
-            ) {
-              commitsCount += Array.isArray(payload.commits) ? payload.commits.length : 1;
-            }
-          } catch (e) {}
-        }
-        post.commit_count = commitsCount;
-      } else {
-        post.commit_count = 0;
-      }
+      post.commit_count = 0;
     }
 
     return res.json({ posts });
@@ -99,6 +78,9 @@ async function getPostById(req, res) {
         p.category,
         p.repo_url,
         p.image_url,
+        p.code_snippet,
+        p.file_url,
+        p.is_pinned,
         p.views,
         p.created_at,
         u.username AS author,
@@ -117,22 +99,7 @@ async function getPostById(req, res) {
       return res.status(404).json({ message: 'Проект не найден' });
     }
 
-    // Commits count
-    let commitsCount = 0;
-    if (post.repo_url) {
-      const events = await all(`SELECT payload_json FROM events WHERE event_type = 'push'`);
-      for (const ev of events) {
-        try {
-          const payload = JSON.parse(ev.payload_json || '{}');
-          const repoFull = payload.repository ? payload.repository.full_name : '';
-          if (repoFull && post.repo_url.includes(repoFull)) {
-            commitsCount += Array.isArray(payload.commits) ? payload.commits.length : 1;
-          }
-        } catch (e) {}
-      }
-    }
-    post.commit_count = commitsCount;
-
+    post.commit_count = 0;
     return res.json({ post });
   } catch (err) {
     console.error('getPostById error:', err);
@@ -140,10 +107,10 @@ async function getPostById(req, res) {
   }
 }
 
-// POST /api/posts — create a new post
+// POST /api/posts — create a new post with optional code, file, pin
 async function createPost(req, res) {
   try {
-    const { title, description, category, repo_url, image_url } = req.body;
+    const { title, description, category, repo_url, image_url, code_snippet, file_url, is_pinned } = req.body;
     const userId = req.user.userId;
 
     if (!title || !title.trim()) {
@@ -153,19 +120,22 @@ async function createPost(req, res) {
       return res.status(400).json({ message: 'Поле "Описание" обязательно' });
     }
 
-    const safeCategory = category && category.trim() ? category.trim() : '3D-Печать';
+    const safeCategory = category && category.trim() ? category.trim() : 'Учёба';
     const safeRepoUrl = repo_url && repo_url.trim() ? repo_url.trim() : null;
     const safeImageUrl = image_url && image_url.trim() ? image_url.trim() : null;
+    const safeCode = code_snippet && code_snippet.trim() ? code_snippet.trim() : null;
+    const safeFile = file_url && file_url.trim() ? file_url.trim() : null;
+    const safePinned = is_pinned ? 1 : 0;
 
     const result = await run(
-      'INSERT INTO posts (user_id, title, description, category, repo_url, image_url) VALUES (?, ?, ?, ?, ?, ?)',
-      [userId, title.trim(), description.trim(), safeCategory, safeRepoUrl, safeImageUrl]
+      'INSERT INTO posts (user_id, title, description, category, repo_url, image_url, code_snippet, file_url, is_pinned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [userId, title.trim(), description.trim(), safeCategory, safeRepoUrl, safeImageUrl, safeCode, safeFile, safePinned]
     );
 
     const post = await get(
       `
       SELECT
-        p.id, p.title, p.description, p.category, p.repo_url, p.image_url, p.views, p.created_at,
+        p.id, p.title, p.description, p.category, p.repo_url, p.image_url, p.code_snippet, p.file_url, p.is_pinned, p.views, p.created_at,
         u.username AS author, u.id AS user_id,
         0 AS comment_count, 0 AS like_count, 0 AS is_liked, 0 AS commit_count
       FROM posts p
@@ -179,6 +149,27 @@ async function createPost(req, res) {
   } catch (err) {
     console.error('createPost error:', err);
     return res.status(500).json({ message: 'Ошибка создания публикации' });
+  }
+}
+
+// POST /api/posts/:id/pin — toggle pinned status
+async function togglePin(req, res) {
+  try {
+    const postId = Number(req.params.id);
+    const userId = req.user.userId;
+
+    const post = await get('SELECT id, user_id, is_pinned FROM posts WHERE id = ?', [postId]);
+    if (!post) {
+      return res.status(404).json({ message: 'Проект не найден' });
+    }
+
+    const newPinned = post.is_pinned ? 0 : 1;
+    await run('UPDATE posts SET is_pinned = ? WHERE id = ?', [newPinned, postId]);
+
+    return res.json({ isPinned: newPinned });
+  } catch (err) {
+    console.error('togglePin error:', err);
+    return res.status(500).json({ message: 'Ошибка изменения закрепления' });
   }
 }
 
@@ -275,4 +266,4 @@ async function addComment(req, res) {
   }
 }
 
-module.exports = { getPosts, getPostById, createPost, toggleLike, getComments, addComment };
+module.exports = { getPosts, getPostById, createPost, togglePin, toggleLike, getComments, addComment };

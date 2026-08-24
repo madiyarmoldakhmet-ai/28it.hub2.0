@@ -312,18 +312,29 @@ function renderProjectsGrid(posts) {
 
 function buildProjectCard(post) {
   const card = document.createElement('div');
-  card.className = 'ollama-card';
+  card.className = `ollama-card ${post.is_pinned ? 'pinned-card' : ''}`;
   card.onclick = () => openProjectDetailModal(post.id);
 
   const coverHtml = post.image_url
     ? `<img src="${escapeHtml(post.image_url)}" class="ollama-card-cover" alt="${escapeHtml(post.title)}" loading="lazy" />`
-    : `<div class="ollama-card-cover" style="display:flex;align-items:center;justify-content:center;font-size:36px;opacity:0.3;">📦</div>`;
+    : `<div class="ollama-card-cover" style="display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.3;">📄</div>`;
 
-  const category = post.category || 'Учёба & Доклады';
+  const category = post.category || 'Учёба';
+
+  const pinBadge = post.is_pinned ? `<span class="post-badge pin-badge">📌 Закреплено</span>` : '';
+  const codeBadge = post.code_snippet ? `<span class="post-badge code-badge">💻 Код</span>` : '';
+  const fileBadge = post.file_url ? `<span class="post-badge file-badge">📎 Файл</span>` : '';
+  const photoBadge = post.image_url ? `<span class="post-badge photo-badge">🖼️ Фото</span>` : '';
 
   card.innerHTML = `
     ${coverHtml}
-    <span class="ollama-card-category">${escapeHtml(category)}</span>
+    <div class="card-badges">
+      ${pinBadge}
+      <span class="ollama-card-category">${escapeHtml(category)}</span>
+      ${codeBadge}
+      ${fileBadge}
+      ${photoBadge}
+    </div>
     <h3 class="ollama-card-title">${escapeHtml(post.title)}</h3>
     <p class="ollama-card-desc">${escapeHtml(post.description)}</p>
     <div class="ollama-card-author">
@@ -381,10 +392,29 @@ function renderProjectDetailBody(post) {
         Написать автору
        </button>`;
 
+  const pinBtnHtml = `<button class="ollama-btn-secondary" id="pinBtn-${post.id}" onclick="togglePin(${post.id})" style="margin-left:8px;">
+                        ${post.is_pinned ? '📌 Открепить' : '📌 Закрепить'}
+                      </button>`;
+
   const repoHtml = post.repo_url
-    ? `<div style="margin:16px 0;">
+    ? `<div style="margin:12px 0;">
          <a href="${escapeHtml(post.repo_url)}" target="_blank" rel="noopener" class="ollama-btn-secondary full-width">
            🔗 Git-репозиторий: ${escapeHtml(post.repo_url)}
+         </a>
+       </div>`
+    : '';
+
+  const codeHtml = post.code_snippet
+    ? `<div style="margin:16px 0;">
+         <div class="ollama-label" style="margin-bottom:6px;">💻 Исходный код:</div>
+         <pre class="code-preview-block"><code>${escapeHtml(post.code_snippet)}</code></pre>
+       </div>`
+    : '';
+
+  const fileHtml = post.file_url
+    ? `<div style="margin:12px 0;">
+         <a href="${escapeHtml(post.file_url)}" download class="ollama-btn-secondary full-width">
+           📎 Скачать прикрепленный файл
          </a>
        </div>`
     : '';
@@ -392,32 +422,66 @@ function renderProjectDetailBody(post) {
   body.innerHTML = `
     ${heroHtml}
     
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:12px;">
       <div>
-        <span class="ollama-card-category" style="margin-bottom:8px;">${escapeHtml(post.category || 'Учёба & Доклады')}</span>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;">
+          ${post.is_pinned ? '<span class="post-badge pin-badge">📌 Закреплено</span>' : ''}
+          <span class="ollama-card-category">${escapeHtml(post.category || 'Учёба')}</span>
+        </div>
         <h1 class="ollama-heading-lg">${escapeHtml(post.title)}</h1>
       </div>
-      <div>
+      <div style="display:flex;align-items:center;">
         ${contactBtnHtml}
+        ${pinBtnHtml}
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--color-hairline);border-bottom:1px solid var(--color-hairline);margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--color-hairline);border-bottom:1px solid var(--color-hairline);margin-bottom:14px;">
       <div class="ollama-user-avatar">${escapeHtml(post.author.charAt(0).toUpperCase())}</div>
       <div>
         <div class="ollama-body-strong">${escapeHtml(post.author)}</div>
         <div class="ollama-caption-sm">Опубликовано: ${date}</div>
       </div>
-      <button class="ollama-btn-secondary" style="margin-left:auto;height:32px;padding:4px 12px;font-size:13px;" id="likeBtn-${post.id}" onclick="toggleLike(${post.id})">
+      <button class="ollama-btn-secondary" style="margin-left:auto;height:30px;padding:3px 10px;font-size:12px;" id="likeBtn-${post.id}" onclick="toggleLike(${post.id})">
         ${post.is_liked ? '❤️ Понравилось' : '🤍 Лайк'} (${post.like_count || 0})
       </button>
     </div>
 
-    <div class="ollama-body-md" style="margin-bottom:16px;white-space:pre-wrap;">${escapeHtml(post.description)}</div>
+    <div class="ollama-body-md" style="margin-bottom:14px;white-space:pre-wrap;">${escapeHtml(post.description)}</div>
 
+    ${codeHtml}
+    ${fileHtml}
     ${repoHtml}
 
     <!-- COMMENTS -->
+    <div style="margin-top:20px;border-top:1px solid var(--color-hairline);padding-top:14px;">
+      <h3 class="ollama-heading-sm" style="margin-bottom:10px;">Обсуждение</h3>
+      <div id="modalCommentsList">
+        <div class="ollama-caption-sm">Загрузка комментариев...</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <textarea id="modalCommentInput" class="ollama-text-input ollama-textarea" rows="2" placeholder="Ваш комментарий..."></textarea>
+        <button class="ollama-btn-primary" style="height:auto;" onclick="submitModalComment(${post.id})">Отправить</button>
+      </div>
+    </div>
+  `;
+
+  loadModalComments(post.id);
+}
+
+async function togglePin(postId) {
+  try {
+    const res = await fetch(`/api/posts/${postId}/pin`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${currentToken}` },
+    });
+    if (!res.ok) return;
+    closeProjectDetailModal();
+    loadProjects();
+  } catch (err) {
+    console.error('togglePin error:', err);
+  }
+}
     <div style="margin-top:24px;border-top:1px solid var(--color-hairline);padding-top:16px;">
       <h3 class="ollama-heading-sm" style="margin-bottom:12px;">Обсуждение</h3>
       <div id="modalCommentsList">
@@ -753,8 +817,10 @@ function openPublishModal() {
   document.getElementById('publishModal').classList.remove('hidden');
   document.getElementById('postTitle').value = '';
   document.getElementById('postDesc').value = '';
-  document.getElementById('postRepo').value = '';
-  document.getElementById('postImageInput').value = '';
+  if (document.getElementById('postCodeSnippet')) document.getElementById('postCodeSnippet').value = '';
+  if (document.getElementById('postImageInput')) document.getElementById('postImageInput').value = '';
+  if (document.getElementById('postFileInput')) document.getElementById('postFileInput').value = '';
+  if (document.getElementById('postIsPinned')) document.getElementById('postIsPinned').checked = false;
   document.getElementById('publishError').classList.add('hidden');
 }
 
@@ -773,8 +839,11 @@ async function handlePublishSubmit(event) {
   const title = document.getElementById('postTitle').value.trim();
   const category = document.getElementById('postCategory').value;
   const description = document.getElementById('postDesc').value.trim();
-  const repo_url = document.getElementById('postRepo').value.trim();
+  const code_snippet = document.getElementById('postCodeSnippet') ? document.getElementById('postCodeSnippet').value.trim() : '';
+  const is_pinned = document.getElementById('postIsPinned') ? document.getElementById('postIsPinned').checked : false;
+
   const imageFileInput = document.getElementById('postImageInput');
+  const fileInput = document.getElementById('postFileInput');
   const errorEl = document.getElementById('publishError');
   const btn = document.getElementById('publishBtn');
 
@@ -795,7 +864,18 @@ async function handlePublishSubmit(event) {
       try {
         image_url = await uploadFile(imageFileInput.files[0]);
       } catch (uploadErr) {
-        errorEl.innerText = 'Ошибка загрузки обложки: ' + uploadErr.message;
+        errorEl.innerText = 'Ошибка загрузки изображения: ' + uploadErr.message;
+        errorEl.classList.remove('hidden');
+        return;
+      }
+    }
+
+    let file_url = null;
+    if (fileInput && fileInput.files[0]) {
+      try {
+        file_url = await uploadFile(fileInput.files[0]);
+      } catch (uploadErr) {
+        errorEl.innerText = 'Ошибка загрузки файла: ' + uploadErr.message;
         errorEl.classList.remove('hidden');
         return;
       }
@@ -811,8 +891,10 @@ async function handlePublishSubmit(event) {
         title,
         description,
         category,
-        repo_url: repo_url || undefined,
-        image_url,
+        code_snippet: code_snippet || undefined,
+        image_url: image_url || undefined,
+        file_url: file_url || undefined,
+        is_pinned,
       }),
     });
     const data = await res.json();

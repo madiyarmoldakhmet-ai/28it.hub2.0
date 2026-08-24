@@ -187,37 +187,6 @@
           </div>
         </section>
 
-        <!-- TERMINAL CARD & ACTIVITY SECTION -->
-        <section class="ollama-section">
-          <div class="ollama-section-header">
-            <h2 class="ollama-heading-lg">Лента событий 28IT.hub</h2>
-            <p class="ollama-body-md">Обновления и активность участников локальной сети</p>
-          </div>
-
-          <div class="ollama-terminal-grid">
-            <!-- TERMINAL CARD PRODUCT PREVIEW -->
-            <div class="ollama-terminal-card">
-              <div class="ollama-terminal-header">
-                <span class="ollama-dot red"></span>
-                <span class="ollama-dot yellow"></span>
-                <span class="ollama-dot green"></span>
-                <span class="ollama-terminal-title">Консоль событий — 28IT.hub</span>
-              </div>
-              <div class="ollama-terminal-body" id="terminalOutput">
-                <div class="ollama-code-sm mute"># Локальное подключение активна</div>
-                <div class="ollama-code-sm"><span class="prompt">$</span> 28it-hub status</div>
-                <div class="ollama-code-sm mute">загрузка системы... 100%</div>
-                <div class="ollama-code-sm">статус: готов к работе (http://localhost:3000)</div>
-              </div>
-            </div>
-
-            <!-- GIT ACTIVITY STREAM -->
-            <div class="ollama-git-stream" id="gitActivityList">
-              <div class="ollama-git-empty">Ожидание новых событий...</div>
-            </div>
-          </div>
-        </section>
-
         <!-- INVERTED DARK CARD SECTION -->
         <section class="ollama-section">
           <div class="ollama-pricing-card-dark">
@@ -225,7 +194,7 @@
               <div class="ollama-dark-badge">ШКОЛЬНОЕ СООБЩЕСТВО</div>
               <h3 class="ollama-heading-lg">Присоединяйтесь к лаборатории 28IT</h3>
               <p class="ollama-body-md dark-mute">
-                Объединяйтесь с другими школьниками, создавайте уникальные работы и делитесь результатами.
+                Объединяйтесь с другими школьниками, создавайте уникальные работы, код и файлы и делитесь результатами.
               </p>
               <button class="ollama-btn-pill-on-dark" onclick="openPublishModal()">
                 Загрузить свою работу
@@ -239,16 +208,16 @@
           <h2 class="ollama-display-lg">Часто задаваемые вопросы</h2>
           <div class="ollama-faq-list">
             <div class="ollama-faq-row">
-              <div class="ollama-heading-sm">Как выложить свой проект?</div>
-              <div class="ollama-body-md">Нажмите кнопку «+ Создать проект», заполните описание, прикрепите файлы или ссылку на репозиторий в Gitea.</div>
+              <div class="ollama-heading-sm">Как выложить свой проект или код?</div>
+              <div class="ollama-body-md">Нажмите кнопку «+ Создать проект», выберите категорию, прикрепите исходный код, изображения или файлы.</div>
             </div>
             <div class="ollama-faq-row">
-              <div class="ollama-heading-sm">Как заказать 3D-печать детали?</div>
-              <div class="ollama-body-md">Найдите интересующий проект в каталоге и нажмите «Написать автору», чтобы обсудить изготовление.</div>
+              <div class="ollama-heading-sm">Как закрепить проект?</div>
+              <div class="ollama-body-md">При публикации отметьте пункт «📌 Закрепить публикацию» или используйте кнопку закрепления в карточке.</div>
             </div>
             <div class="ollama-faq-row">
               <div class="ollama-heading-sm">Работает ли сайт без интернета?</div>
-              <div class="ollama-body-md">Да, платформа развернута в локальной сети школы и доступна автономно.</div>
+              <div class="ollama-body-md">Да, платформа развернута в локальной сети школы и доступна автономно по адресу http://192.168.0.132:3000.</div>
             </div>
           </div>
         </section>
@@ -260,10 +229,9 @@
             <a href="#" onclick="navigate('projects'); return false;">Проекты</a>
             <a href="#" onclick="navigate('my-projects'); return false;">Мои публикации</a>
             <a href="#" onclick="navigate('chats'); return false;">Сообщения</a>
-            <span>Gitea</span>
-            <span>28IT Lab</span>
+            <span>28IT Network</span>
           </div>
-          <div class="ollama-footer-copy">© 2026 28IT.hub · Документированная система мейкеров</div>
+          <div class="ollama-footer-copy">© 2026 28IT.hub · Школьная система проектов</div>
         </footer>
 
       </div><!-- /pageView -->
@@ -356,33 +324,44 @@
         <form id="publishForm" onsubmit="handlePublishSubmit(event)">
           <div class="ollama-form-group">
             <label class="ollama-label" for="postTitle">Название проекта *</label>
-            <input type="text" id="postTitle" class="ollama-text-input" placeholder="Например: FPV Квадрокоптер Mark4" required />
+            <input type="text" id="postTitle" class="ollama-text-input" placeholder="Например: Калькулятор физических формул" required />
           </div>
 
           <div class="ollama-form-group">
             <label class="ollama-label" for="postCategory">Категория</label>
             <select id="postCategory" class="ollama-text-input ollama-select">
-              <option value="Учёба & Доклады">Учёба & Доклады</option>
-              <option value="Творчество & Дизайн">Творчество & Дизайн</option>
-              <option value="Игры & Развлечения">Игры & Развлечения</option>
-              <option value="Идеи & Лайфхаки">Идеи & Лайфхаки</option>
+              <option value="Учёба">Учёба</option>
+              <option value="Творчество">Творчество</option>
+              <option value="Игры & Досуг">Игры & Досуг</option>
+              <option value="Идеи & Проекты">Идеи & Проекты</option>
               <option value="Другое">Другое</option>
             </select>
           </div>
 
           <div class="ollama-form-group">
             <label class="ollama-label" for="postDesc">Описание проекта *</label>
-            <textarea id="postDesc" class="ollama-text-input ollama-textarea" rows="4" placeholder="Характеристики, детали, особенности..." required></textarea>
+            <textarea id="postDesc" class="ollama-text-input ollama-textarea" rows="3" placeholder="Краткое описание работы..." required></textarea>
           </div>
 
           <div class="ollama-form-group">
-            <label class="ollama-label" for="postRepo">Ссылка на Git-репозиторий (Gitea / GitHub)</label>
-            <input type="text" id="postRepo" class="ollama-text-input" placeholder="http://192.168.8.178:3000/user/fpv-project" />
+            <label class="ollama-label" for="postCodeSnippet">💻 Исходный код / Скрипт (необязательно)</label>
+            <textarea id="postCodeSnippet" class="ollama-text-input ollama-textarea ollama-code-font" rows="4" placeholder="const hello = 'World'; // Вставьте код здесь"></textarea>
           </div>
 
           <div class="ollama-form-group">
-            <label class="ollama-label" for="postImageInput">Обложка / Изображение</label>
+            <label class="ollama-label" for="postImageInput">🖼️ Обложка / Изображение</label>
             <input type="file" id="postImageInput" accept="image/*" class="ollama-text-input" />
+          </div>
+
+          <div class="ollama-form-group">
+            <label class="ollama-label" for="postFileInput">📎 Прикрепить файл / Архив</label>
+            <input type="file" id="postFileInput" class="ollama-text-input" />
+          </div>
+
+          <div class="ollama-form-group checkbox-row">
+            <label class="ollama-checkbox-label">
+              <input type="checkbox" id="postIsPinned" /> 📌 Закрепить проект вверху каталога
+            </label>
           </div>
 
           <div id="publishError" class="ollama-warning-box hidden"></div>
