@@ -154,6 +154,18 @@ function switchAuthTab(tab) {
   document.getElementById('authError').classList.add('hidden');
 }
 
+function submitAuthDirect(tab) {
+  switchAuthTab(tab);
+  const form = document.getElementById('authForm');
+  if (form) {
+    if (form.requestSubmit) {
+      form.requestSubmit();
+    } else {
+      handleAuthSubmit(new Event('submit'));
+    }
+  }
+}
+
 async function handleAuthSubmit(event) {
   event.preventDefault();
   const username = document.getElementById('usernameInput').value.trim();

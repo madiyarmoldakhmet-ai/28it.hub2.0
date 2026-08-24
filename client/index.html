@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=nexus_v1" />
+  <link rel="stylesheet" href="style.css?v=v28" />
 </head>
 <body class="ollama-body">
 
@@ -42,8 +42,9 @@
 
           <div id="authError" class="ollama-warning-box hidden"></div>
 
-          <div class="ollama-form-actions">
+          <div class="ollama-form-actions" style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
             <button type="submit" id="authSubmitBtn" class="ollama-btn-primary full-width">Войти</button>
+            <button type="button" onclick="submitAuthDirect('register')" class="ollama-btn-secondary full-width">Создать новый аккаунт (Регистрация)</button>
           </div>
         </form>
       </div>
@@ -376,6 +377,6 @@
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="app.js?v=ollama_v1"></script>
+  <script src="app.js?v=v28"></script>
 </body>
 </html>
