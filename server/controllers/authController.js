@@ -20,18 +20,18 @@ async function register(req, res) {
     const password = String(req.body.password || '').trim();
 
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required' });
+      return res.status(400).json({ message: 'Введите имя пользователя и пароль' });
     }
 
-    if (username.length < 3 || password.length < 6) {
+    if (username.length < 1 || password.length < 1) {
       return res.status(400).json({
-        message: 'Username must be at least 3 characters and password at least 6 characters',
+        message: 'Имя пользователя и пароль не могут быть пустыми',
       });
     }
 
     const existingUser = await get('SELECT id FROM users WHERE username = ?', [username.toLowerCase()]);
     if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
+      return res.status(409).json({ message: 'Пользователь с таким именем уже зарегистрирован' });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -48,7 +48,7 @@ async function register(req, res) {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Registration failed', error: error.message });
+    return res.status(500).json({ message: 'Ошибка при регистрации', error: error.message });
   }
 }
 
@@ -58,17 +58,17 @@ async function login(req, res) {
     const password = String(req.body.password || '').trim();
 
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required' });
+      return res.status(400).json({ message: 'Введите имя пользователя и пароль' });
     }
 
     const user = await get('SELECT * FROM users WHERE username = ?', [username]);
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Неверное имя пользователя или пароль' });
     }
 
     const validPassword = await bcrypt.compare(password, user.password_hash);
     if (!validPassword) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Неверное имя пользователя или пароль' });
     }
 
     const token = signToken({ id: user.id, username: user.username });
@@ -81,7 +81,7 @@ async function login(req, res) {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Login failed', error: error.message });
+    return res.status(500).json({ message: 'Ошибка входа', error: error.message });
   }
 }
 
