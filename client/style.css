@@ -385,17 +385,23 @@ button {
 
 .ollama-tab-pill {
   flex: 1;
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 500;
   color: var(--color-body);
   text-align: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
 }
 
 .ollama-tab-pill.active {
   background-color: var(--color-canvas);
   color: var(--color-ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .ollama-form-group {

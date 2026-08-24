@@ -25,14 +25,14 @@
 
       <div class="ollama-auth-card">
         <div class="ollama-auth-tabs">
-          <button id="loginTabBtn" class="ollama-tab-pill active" onclick="switchAuthTab('login')">Вход</button>
-          <button id="registerTabBtn" class="ollama-tab-pill" onclick="switchAuthTab('register')">Регистрация</button>
+          <button type="button" id="loginTabBtn" class="ollama-tab-pill active" onclick="switchAuthTab('login')">Вход</button>
+          <button type="button" id="registerTabBtn" class="ollama-tab-pill" onclick="switchAuthTab('register')">Регистрация</button>
         </div>
 
         <form id="authForm" onsubmit="handleAuthSubmit(event)">
           <div class="ollama-form-group">
             <label class="ollama-label" for="usernameInput">Имя пользователя</label>
-            <input type="text" id="usernameInput" class="ollama-text-input" required minlength="3" autocomplete="username" placeholder="alex_student" />
+            <input type="text" id="usernameInput" class="ollama-text-input" required autocomplete="username" placeholder="alex_student" />
           </div>
 
           <div class="ollama-form-group">
